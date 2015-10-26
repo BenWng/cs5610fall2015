@@ -1,0 +1,14 @@
+﻿<!DOCTYPE html>
+
+<div id="wrapper" ng-controller="SidebarController">
+
+	<div class="col-sm-3 col-md-2 sidebar">
+	    <ul class="nav nav-sidebar">
+	        <li><a ng-class = "{'Link_Active':ActiveOrNot('/home')}" href="#/home">Home <span class="sr-only">(current)</span></a></li>
+	        <li><a ng-class = "{'Link_Active':ActiveOrNot('/profile')}" href="#/profile">Profile</a></li>
+	        <li><a ng-class = "{'Link_Active':ActiveOrNot('/admin')}" href="#/admin">Admin</a></li>
+	        <li><a ng-class = "{'Link_Active':ActiveOrNot('/forms')}" href="#/forms">Forms</a></li>
+	    </ul>
+	</div>
+
+</div>

@@ -1,0 +1,69 @@
+(function(){
+	  angular
+		.module("FormBuilderApp")
+		.factory("UserService", UserService)
+
+	////////////////////////////////////////////
+	function UserService(){
+		var users = []
+		var UserService = {
+			findAllUsers: findAllUsers,
+			createUser: createUser,
+			findUserByUsernameAndPassword: findUserByUsernameAndPassword,
+			updateUser: updateUser,
+			deleteUserById: deleteUserById
+		}
+
+		return UserService;
+
+		////////////////////////////////////////////
+		function findAllUsers(){
+			var deferred=$q.defer();
+			$http.get("api/assignment/user")
+				.success(function(res){
+					deferred.resolve(res);
+				});
+			return deferred.promise;
+		}
+		////////////////////////////////////////////
+		function createUser (newUser){
+			var deferred=$q.defer();
+			$http.post("/api/assignment/user",newUser)
+				.success(function(user){
+					deferred.resolve(user);
+				});
+				return deferred.promise;
+		}
+		////////////////////////////////////////////
+		function findUserByUsernameAndPassword (username, password){
+			var deferred = $q.defer();
+			$http.get("/api/assignment/user?username="+username+"&password="+password)
+				.success(function(user){
+					deferred.resolve(user);
+				});
+				return deferred.promise;
+		}
+
+		////////////////////////////////////////////
+		function updateUser (id, user){
+			var deferred=$q.defer();
+			$http.put("/api/assignment/user/"+id, user)
+				.success(function(user){
+					deferred.resolve(user);
+				});
+			return deferred.promise;
+		}
+
+		////////////////////////////////////////////
+		function deleteUserById(id){
+			var deferred = $q.defer();
+			$http.delete("/api/assignment/user/"+id)
+				.success(function(user){
+					deferred.resolve(user);
+				})
+			return deferred.promise;
+		}
+
+
+	}
+})();

@@ -2,42 +2,42 @@
 	angular
 		.module("FormBuilderApp")
 		.config(Configuration)
-	
-	
-	function Configuration ($routeProvider) 
+
+
+	function Configuration ($routeProvider)
 	{
 		$routeProvider
 			.when('/home', {
-				templateUrl:  './home/home.view.html',
+				templateUrl:  'views/home/home.view.html',
 			})
 			.when('/register', {
-				templateUrl:  './register/register.view.html',
+				templateUrl:  'views/register/register.view.html',
 				controller: 'RegisterController'
 			})
 			.when('/login', {
-				templateUrl:  './login/login.view.html',
+				templateUrl:  'views/login/login.view.html',
 				controller: 'LoginController'
 
 			})
 			.when('/profile', {
-				templateUrl:  './profile/profile.view.html',
+				templateUrl:  'views/profile/profile.view.html',
 				controller:'ProfileController',
 			})
 			.when('/admin', {
-				templateUrl:  './admin.html',
+				templateUrl:  'views/admin/admin.view.html',
 				//controller:'AdminController',
 			})
 			.when('/forms', {
-				templateUrl:  './form/form.view.html',
+				templateUrl:  'views/form/form.view.html',
 				controller:'FormController',
 			})
-			.when('/form-fields', {
-				templateUrl:  './form-fields.html',
-				//controller:'FormFieldsController',
+			.when('/user/:userId/form/:formId/fields', {
+				templateUrl:  'views/field/field.view.html',
+				controller:"FieldController"
 			})
 			.otherwise({
 				redirectTo:'/home'
 			})
-			
+
 	}
 })();

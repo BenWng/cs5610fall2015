@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<div class="ngdialog-message">
+    <h2>Field Properties</h2>
+    <form>
+        <div class="form-group">
+            <label for="dialogLabel">Label:</label>
+            <input type="text" class="form-control" id="dialogLabel" ng-model="dialog.label" placeholder="Label">
+        </div>
+        <div class="form-group" ng-if="hasPlaceHolder(dialog.fieldType)">
+            <label for="dialogPlaceholder">Placeholder:</label>
+            <input type="text" class="form-control" id="dialogPlaceholder" ng-model="dialog.placeholder" placeholder="PlaceHolder">
+        </div>
+        <div class="form-group">
+            <label for="dialogTooltip">Tooltip:</label>
+            <input type="text" class="form-control" id="dialogTooltip" ng-model="dialog.tooltip" placeholder="Tooltop">
+        </div>
+        <div class="form-group">
+            <label for="dialogType">Type:</label>
+            <select type="text" class="form-control" id="dialogType" ng-model="dialog.fieldType" ng-options= "item.value as item.label for item in dialog.fieldTypes">
+            </select>
+        </div>
+        <div class="form-group" ng-if="hasItems(dialog.fieldType)">
+            <label for="dialogItems">Items:</label>
+            <textarea class="form-control" id="dialogItems" rows="4" ng-model="dialog.items" placeholder="Items for new field"> </textarea>
+        </div>
+    </form>
+</div>
+<hr>
+<div class="ngdialog-buttons mt">
+    <button type="button" class="ngdialog-button ngdialog-button-danger" ng-click="closeThisDialog()"> back </button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="add(dialog)"> add </button>
+</div>

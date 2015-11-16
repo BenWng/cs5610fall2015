@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<div id="wrapper" ng-controller="FieldController">
+
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9">
+            <h1 class="page-header">Forms: Registration Form</h1>
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="#/forms" class="nav-link active">Forms</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#/fields" class="nav-link">Fields</a>
+                </li>
+            </ul>
+
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <div class="form-group row" ng-repeat="field in model.fields">
+
+                            <div ng-switch on="field.type">
+                                <div ng-switch-when="TEXT">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}">{{field.label}}</label>
+                                        <input type="text" class="form-control" id="{{field.id}}" placeholder="{{field.placeholder}}" ng-model="field.content">
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="TEXTAREA">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}">{{field.label}}</label>
+                                        <textarea class="form-control" id="{{field.id}}" placeholder="{{field.placeholder}}" ng-model="field.content"> </textarea>
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="EMAIL">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}">{{field.label}}</label>
+                                        <input type="email" class="form-control" id="{{field.id}}" placeholder="{{field.placeholder}}" ng-model="field.content">
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="DATE">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}">{{field.label}}</label>
+                                        <input type="date" class="form-control" id="{{field.id}}" ng-model="field.content">
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="OPTIONS">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}">{{field.label}}</label>
+                                        <select id="{{field.id}}" class="form-control" ng-init="field.selected = field.options[0].value" ng-options="item.value as item.label for item in field.options" ng-model="field.selected"></select>
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="RADIOS">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}"> {{field.label}} </label>
+                                        <br />
+                                        <div id={{field.id}} ng-repeat="radio in field.options">
+                                            <input type="radio" name="{{field.label}}" ng-model="field.selected" ng-value="radio.value" />
+                                            <b>{{radio.label}}</b>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="CHECKBOXES">
+                                    <div class="col-sm-9" title="{{field.tooltip}}">
+                                        <label for="{{field.id}}"> {{field.label}} </label>
+                                        <br />
+                                        <div id={{field.id}} ng-repeat="checkbox in field.options">
+                                            <input type="checkbox" checklist-model="field.checkedItems" checklist-value="checkbox.value" />
+                                            <b>{{checkbox.label}}</b>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div ng-switch-default>
+                                    <div class="col-sm-9">
+                                        Field type {{field.type}} is invalid
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="pull-right">
+                                    <a type="submit" title="edit this field" ng-click="editField(field)">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                    <a type="submit" title="copy this field" ng-click="copyField(field)">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                    <a type="submit" title="reomve this field" ng-click="removeField(field)">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                    <a type="submit">
+                                        <span class="glyphicon glyphicon-align-justify"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+
+
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <label for="addField">Add New Field</label>
+                                <select id="addField" class="form-control" ng-init="model.fieldType = model.fieldTypes[0].value" ng-options="item.value as item.label for item in model.fieldTypes" ng-model="model.fieldType"></select>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="pull-right">
+                                    <hr />
+                                    <a type="submit" title="add a new field" ng-click="addField(model.fieldType)">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

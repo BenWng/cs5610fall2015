@@ -4,8 +4,8 @@
 		.factory("UserService", UserService)
 
 	////////////////////////////////////////////
-	function UserService(){
-		var users = []
+	function UserService($http,$q){
+
 		var UserService = {
 			findAllUsers: findAllUsers,
 			createUser: createUser,

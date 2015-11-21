@@ -5,7 +5,7 @@
             <h1 class="page-header">Forms</h1>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a href="#/forms" class="nav-link active">Forms</a>
+                    <a href="#" class="nav-link active">Forms</a>
                 </li>
                 <li class="nav-item">
                     <a href="#/user/{{user.id}}/form/{{form_first.id}}/fields" class="nav-link">
@@ -28,7 +28,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input ng-model="form_first.name" type="text" class="form-control" id="username" placeholder="username">
+                            <input ng-model="form_first.title" type="text" class="form-control" id="username" placeholder="username">
                         </td>
                         <td>
                             <a type="submit" ng-click="addForm()"><span class="glyphicon glyphicon-plus"></span></a>
@@ -37,7 +37,7 @@
                     </tr>
 
                     <tr ng-repeat="form in forms">
-                        <td>{{form.name}}</td>
+                        <td>{{form.title}}</td>
                         <td>
                             <a type="submit" ng-click="deleteForm($index)"><span class="glyphicon glyphicon-remove"></span></a>
                             <a type="submit" ng-click="selectForm($index)"><span class="glyphicon glyphicon-pencil"></span></a>

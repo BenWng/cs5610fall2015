@@ -1,4 +1,4 @@
-﻿<div id="wrapper">
+﻿<div id="wrapper" ng-controller="uploadController">
     <!-- Page Content -->
     <div class="container">
         <!-- Page Heading -->
@@ -14,27 +14,29 @@
 
         <form role="form">
             <div class="form-group">
-                <label for="email">Title:</label>
-                <input type="text" class="form-control" id="title" placeholder="Performance Title">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" placeholder="Performance Title" ng-model="post.title">
             </div>
             <div class="form-group">
-                <label for="pwd">Youtube Video ID:</label>
-                <input type="text" class="form-control" id="Youtube" placeholder="Youtube Video ID">
+                <label for="Youtube">Youtube Video ID:</label>
+                <input type="text" class="form-control" id="Youtube" placeholder="Youtube Video ID" ng-model="post.youtube">
             </div>
             <div class="form-group">
-                <label for="pwd">Tags, sperate by commas:</label>
-                <input type="text" class="form-control" id="tags" placeholder="Tags">
+                <label for="tags">Tags, sperate by commas:</label>
+                <input type="text" class="form-control" id="tags" placeholder="Tags" 
+                ng-model="post.tags">
             </div>
             <div class="form-group">
-                <label for="pwd">Short Description:</label>
-                <textarea class="form-control" rows="2" id="Short Description" placeholder="Short Description"></textarea>
+                <label for="Short Description">Short Description:</label>
+                <textarea class="form-control" rows="2" id="Short Description" placeholder="Short Description" ng-model="post.shortDescription"></textarea>
             </div>
             <div class="form-group">
-                <label for="pwd">Details:</label>
-                <textarea class="form-control" rows="5" id="details" placeholder="Details"></textarea>
+                <label for="details">Details:</label>
+                <textarea class="form-control" rows="5" id="details" placeholder="Details"
+                ng-model="post.details"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" ng-click="submitPost">Submit</button>
         </form>
         <hr>
     </div>

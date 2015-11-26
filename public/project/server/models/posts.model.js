@@ -1,5 +1,6 @@
 var posts = require ("./posts.mockup.json");
 
+"use strict";
 
 module.exports = function (app) {
 
@@ -43,11 +44,25 @@ module.exports = function (app) {
 			return posts;
 		}
 
-		function findPostsAll(){
-			return posts;
+		function findPostsAll(searchText){
+		 	if (searchText === 'undefined' || searchText ===null ){
+				return posts;
+			}
+		 	else {
+				//console.log("test,test");
+				return posts.filter(function(post){
+					return post.title.indexOf(searchText)>-1 || post.author.indexOf(searchText)>-1 || post.tags.join().indexOf(searchText)>-1 || post.shortDescription.indexOf(searchText)>-1 || post.details.indexOf(searchText)>-1 ;
+					});
+
+					console.log(results);
+			}
 		}
 
+
+
+
 		function findPostById(id){
+
 			var postById={};
 			for (var i=0;i<posts.length;i++){
 				if(posts[i].id==id){
@@ -55,6 +70,7 @@ module.exports = function (app) {
 					break;
 				}
 			}
+			console.log(postById);
 			return postById;
 		}
 

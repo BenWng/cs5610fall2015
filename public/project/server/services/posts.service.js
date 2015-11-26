@@ -1,12 +1,13 @@
 module.exports = function (app,model){
 
-  app.post("/api/project/post", createPost)
-  app.put("/api/project/post/:postId", updatePostById)
-  app.delete("api/project/post/:postId", deletePostById)
-  app.get("api/project/post", findPostsAll)
-  app.get("api/project/post/id/:postId", findPostById)
-  app.get("api/project/post/tag/:tag",findPostsByTag)
-  app.get("/api/project/post/user/:userId",findPostsByUserId)
+  app.post("/api/project/post", createPost);
+  app.put("/api/project/post/:postId", updatePostById);
+  app.delete("/api/project/post/:postId", deletePostById);
+  app.get("/api/project/post", findPostsAll);
+  app.get("/api/project/post/id/:postId", findPostById);
+  app.get("/api/project/post/tag/:tag",findPostsByTag);
+  app.get("/api/project/post/user/:userId",findPostsByUserId);
+
 
   function createPost(req,res){
     var newPost = req.body;
@@ -25,11 +26,13 @@ module.exports = function (app,model){
   }
 
   function findPostsAll(req,res){
-    res.json(model.findPostsAll());
+    console.log(req.query.searchText);
+    res.json(model.findPostsAll(req.query.searchText));
   }
 
   function findPostById(req,res){
     id=req.params.postId;
+    console.log(id);
     res.json(model.findPostById(id));
   }
 

@@ -1,4 +1,4 @@
-<div id="wrapper">
+<div id="wrapper" ng-controller="navigationController">
 <!-- Navigation -->
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -9,30 +9,36 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../index.html">Main page</a>
+            <a class="navbar-brand" href="#/home">Main page</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#/">My posts</a>
+                    <a href="#/home?user={{currentUser.id}}">My posts</a>
                 </li>
+
                 <li>
-                    <a href="../Upload/Upload.view.html">New post</a>
+                    <a href="#/add">New post</a>
                 </li>
-                <li>
-                    <a href="../Upload/Upload.view.html">Edit this post</a>
-                </li>
+
+
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<b class="caret"></b></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">My Account<b class="caret"></b></a>
                     <ul class="dropdown-menu">
 
-                        <li class="divider"></li>
-                            <li><a class="pull-middle">Yo-Yo Ma</a></li>
-                        <li class="divider"></li>
-                        <li><a href="../index.html">Log Out</a></li>
-                        <li><a href="../Registration/Registration.view.html">Register</a></li>
-                        <li><a href="../Contact/Contact.view.html">Contact Adminstrator</a></li>
+
+                         <li ng-show="currentUser"><a class="pull-middle">{{currentUser.Name}}</a></li>
+                          <li class="divider" ng-show="currentUser"></li>
+
+
+
+
+                        <li><a ng-click='logout()'>Log Out</a></li>
+
+
+                        <li><a href="#/registration">Register</a></li>
+                        <li><a href="#/contact">Contact Adminstrator</a></li>
                     </ul>
                 </li>
 
@@ -43,9 +49,9 @@
            <div class="col-sm-3 col-md-3 pull-right">
             <form class="navbar-form" role="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <input type="text" class="form-control" placeholder="Search" name="q" ng-model="searchText">
                         <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            <button class="btn btn-default" type="submit" ng-click='searching()'><i class="glyphicon glyphicon-search"></i></button>
                         </div>
                 </div>
             </form>

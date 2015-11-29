@@ -1,4 +1,3 @@
-
 var uuid = require('node-uuid');
 
 module.exports = function(app, model, db){
@@ -13,24 +12,18 @@ module.exports = function(app, model, db){
         var userId = req.params.userId;
         var form = req.body;
         form.userId = userId;
-
-        model.create(form).then(function(forms){
-            res.json(forms);
-        })
+        form.id = uuid.v4();
+        res.json(model.create(form));
     }
 
     function FindFormsByUserId(req, res){
         var userId = req.params.userId;
-        model.findFormsByUserId(userId).then(function (forms){
-            res.json(forms)
-        });
+        res.json(model.findFormsByUserId(userId));
     }
 
     function FindFormById(req, res){
         var id = req.params.formId;
-        model.findById(id).then(function (form){
-            res.json(form);
-        })
+        res.json(model.findById(id));
     }
 
 
@@ -38,17 +31,11 @@ module.exports = function(app, model, db){
         var id = req.params.formId;
         console.log(id);
         var form = req.body;
-
-        model.update(id, form).then(function(forms){
-            res.json(forms);
-        })
+        res.json(model.update(id, form));
     }
 
     function DeleteFormById(req, res){
         var id = req.params.formId;
-        model.delete(id).then(function(forms){
-            res.json(forms);
-        })
+        res.json(model.delete(id));
     }
 }
-

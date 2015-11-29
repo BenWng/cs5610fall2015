@@ -1,4 +1,3 @@
-
 var uuid = require('node-uuid');
 
 module.exports = function(app, model, db) {
@@ -10,41 +9,31 @@ module.exports = function(app, model, db) {
 
     function FindFieldsByFormId(req, res){
         var formId = req.params.formId;
-        model.findFieldsByFormId(formId).then(function(fields){
-            res.json(fields);
-        });
+        res.json(model.findFieldsByFormId(formId));
     }
     function FindFieldById(req, res){
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        model.findFieldById(formId, fieldId).then(function(field){
-            res.json(field)
-        });
+        res.json(model.findFieldById(formId, fieldId));
     }
 
     function  DeleteFieldById(req, res){
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
-        model.deleteField(formId, fieldId).then(function(fields){
-            res.json(fields);
-        });
+        res.json(model.deleteField(formId, fieldId));
     }
 
     function CreateFieldByFormId(req, res){
         var formId = req.params.formId;
         var field = req.body;
         field.id = uuid.v4();
-        model.createField(formId, field).then(function(fields){
-            res.json(fields);
-        });
+        res.json(model.createField(formId, field));
     }
 
     function UpdateFieldById(req, res){
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
-        model.updateField(formId, fieldId, field).then(function(fields){
-            res.json(fields);
-        });
+        res.json(model.updateField(formId, fieldId, field));
     }
 }

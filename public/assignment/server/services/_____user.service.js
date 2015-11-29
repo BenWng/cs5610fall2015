@@ -1,4 +1,3 @@
-
 var uuid = require('node-uuid');
 
 module.exports = function(app, model, db){
@@ -11,57 +10,45 @@ module.exports = function(app, model, db){
 
     function CreateUser(req, res){
         var user = req.body;
-        model.create(user).then(function(users){
-            res.json(users);
-        })
+        console.log(user);
+        user.id = uuid.v4();
+        res.json(model.create(user));
     }
 
     function FindUsers(req, res){
         var username = req.query.username;
         var password = req.query.password;
 
-        if(username == null && password == null) {
-            model.findAll().then(function(users){
-                res.json(users)
-            })
-        }
+        if(username == null && password == null)
+            res.json(model.findAll());
 
-        else if(password == null) {
-            model.findByUsername(username).then(function(user){
-                res.json(user);
-            })
-        }
+        else if(password == null)
+            res.json(model.findByUsername(username));
 
         else{
             var credentials = {
                 username: req.query.username,
                 password: req.query.password
             }
-            model.findByCredentials(credentials).then(function(user){
-                res.json(user);
-            })
+            res.json(model.findByCredentials(credentials));
         }
+
     }
 
     function FindUserById(req, res){
         var id = req.params.id;
-        model.findById(id).then(function(user){
-            res.json(user);
-        })
+        res.json(model.findById(id));
     }
 
     function UpdateUserById(req, res){
         var id = req.params.id;
         var user = req.body;
-        model.update(id, user).then(function(users){
-            res.json(users);
-        })
+        res.json(model.update(id, user));
     }
 
     function DeleteUserById(req, res){
         var id = req.params.id;
-        model.delete(id).then(function(users){
-            res.json(users);
-        })
+        res.json(model.delete(id));
+
     }
 }

@@ -11,7 +11,7 @@ function FormController($scope, $rootScope, $location, FormService){
 	if(user == null)
 		alert("please login first");
 	else{
-		RenderForm(user.id);
+		RenderForm(user._id);
 		$scope.addForm = AddForm;
 		$scope.deleteForm = DeleteForm;
 		$scope.selectForm = SelectForm;
@@ -27,7 +27,8 @@ function FormController($scope, $rootScope, $location, FormService){
 	
 	function AddForm(){
 		var form = $scope.form_first;
-		FormService.createFormForUser(user.id, form)
+		form.userId = user._id;
+		FormService.createFormForUser(user._id, form)
 			.then(function(forms){
 				$scope.forms = forms;
 			});
@@ -35,11 +36,10 @@ function FormController($scope, $rootScope, $location, FormService){
 	
 	function UpdateForm(){
 		var form = $scope.form_first;
-		if(form.id == null)
-			alert("This form has not been created yet, please create it first");
+		if(form._id == null)
+			alert("This form has not been created yet");
 		else{
-			console.log(form.id);
-			FormService.updateFormById(form.id, form)
+			FormService.updateFormById(form._id, form)
 				.then(function(forms){
 					$scope.forms = forms;
 				})
@@ -48,7 +48,7 @@ function FormController($scope, $rootScope, $location, FormService){
 	
 	function DeleteForm(index){
 		var form = $scope.forms[index];
-		FormService.deleteFormById(form.id).then(function(forms){
+		FormService.deleteFormById(form._id).then(function(forms){
 			$scope.forms = forms;
 		});
 	}

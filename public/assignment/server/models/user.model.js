@@ -31,7 +31,7 @@ module.exports = function(app, mongoose, db) {
     function FindAll() {
         var deferred = q.defer();
         UserModel.find(function(err, users){
-            deferred.resolve(users)
+            deferred.resolve(users);
         })
         return deferred.promise;
     };

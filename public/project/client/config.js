@@ -33,9 +33,9 @@
         })
           .when('/admin',{
             templateUrl: './view/Administrator/Administrator.view.html'
-            /*  resolve: {
+              resolve: {
                   admin_show: admin_show
-              } */
+              }
         })
           .otherwise({
               redirectTo:'/home'

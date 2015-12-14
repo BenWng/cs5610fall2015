@@ -32,10 +32,10 @@
           templateUrl: './view/Individual/Individual.view.html'
         })
           .when('/admin',{
-            templateUrl: './view/Administrator/Administrator.view.html',
-            <!--  resolve: {
+            templateUrl: './view/Administrator/Administrator.view.html'
+            /*  resolve: {
                   admin_show: admin_show
-              }-->
+              } /
         })
           .otherwise({
               redirectTo:'/home'

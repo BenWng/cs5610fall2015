@@ -124,7 +124,7 @@ module.exports = function (app, mongoose, db) {
 
 		function findPostsByTag(tag){
 			var deferred= q.defer();
-			PostModel.find({tags:tag},function(err,posts){
+			PostModel.find({tags:{ "$regex":tag, "$options": "i" }},function(err,posts){
 				console.log(tag);
 				deferred.resolve(posts);
 			})

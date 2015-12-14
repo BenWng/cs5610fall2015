@@ -10,7 +10,10 @@
 			createPost: createPost,
 			findPostsAll: findPostsAll,
 			findPostById: findPostById,
-			findPostsByUserId: findPostsByUserId
+			findPostsByUserId: findPostsByUserId,
+			updatePostById: updatePostById,
+			findPostsByTag: findPostsByTag,
+			deletePostById: deletePostById
 		}
 
 		return service;
@@ -28,7 +31,22 @@
 		}
 
 		function createPost(post){
+			//console.log(post);
 			return $http.post("/api/project/post",post);
+		}
+
+		function updatePostById(postId,post){
+			//console.log(post);
+			return $http.put("/api/project/post/"+postId, post);
+		}
+
+		function findPostsByTag(tag){
+			//console.log(tag);
+			return $http.get("/api/project/post/tag/"+tag);
+		}
+
+		function deletePostById(id){
+			return $http.delete("/api/project/post/"+id);
 		}
 	}
 

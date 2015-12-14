@@ -1,84 +1,158 @@
-var users=require("./users.mockup.json");
-module.exports=function(app){
+var q=require("q");
+
+
+module.exports=function(app, mongoose, db){
+
+
+	var UserSchema = require ("../schema/user.schema.js")(app,mongoose,db);
+	var UserModel = mongoose.model("UserModel", UserSchema);
+
 
 	var api={
 		createUser : createUser,
 		findUsersAll: findUsersAll,
 		findUserById: findUserById,
+		findUserByGoogleId: findUserByGoogleId,
+		findOrCreate: findOrCreate,
 		findUserByAccount: findUserByAccount,
 		findUserByCredentials: findUserByCredentials,
 		updateUserById: updateUserById,
-		deleteUserById: deleteUserById
+		deleteUserById: deleteUserById,
+		followThisPerson: followThisPerson,
+		unfollowThisPerson: unfollowThisPerson
 	};
 
 	return api;
 
 	function createUser(user){
-		users.push(user);
-		return user;
+		var deferred = q.defer();
+		UserModel.create(user,function(err,doc){
+			UserModel.find(function(err,users){
+				deferred.resolve(users);
+			})
+		})
+		return deferred.promise;
 	}
 
 	function findUsersAll(){
-		return users;
+		var deferred = q.defer();
+		UserModel.find(function(err,users){
+			deferred.resolve(users);
+		})
+		return deferred.promise;
 	}
 
 	function findUserById(id){
-		var userById={};
-		for(var i=0;i<users.length;i++){
-				if(users[i].id==id){
-					userById=users[i];
-					break;
-				}
-		}
-		return userById;
+		var deferred = q.defer();
+		UserModel.findById(id, function(err,user){
+			console.log(user);
+			deferred.resolve(user);
+		})
+		return deferred.promise;
 	}
 
+	function findUserByGoogleId(googleid){
+		var deferred = q.defer();
+		UserModel.findOne({GoogleId:googleid}, function(err,user){
+			deferred.resolve(user);
+		})
+		return deferred.promise;
+	}
+
+
+	function findOrCreate(user){
+		return findUserByGoogleId(user.GoogleId) || createUser(user) ;
+
+	}
+
+
 	function findUserByAccount(account){
-		var userByAccount={}
-		for (var i=0; i<users.length; i++){
-			if (users[i].account==acount){
-					userByAccount=users[i];
-					break;
-			}
-		}
-		return userByAccount;
+		var deferred = q.defer();
+		UserModel.findOne({Account: account}, function(err, user){
+			deferred.resolve(user);
+		})
+		return deferred.promise;
 	}
 
 	function findUserByCredentials(credentials){
-		var userByCredentials={}
-		for (var i=0; i<users.length;i++){
-			if (users[i].username == credentials.username
-			&& users[i].activation==credentials.activation)
-				{
-					userByCredentials=users[i];
-					break;
-				}
-		}
-		return userByCredentials;
+		var deferred = q.defer();
+
+		var Account = credentials.Account;
+		var activation = credentials.activation;
+		UserModel.findOne({Account: Account, activation: activation}, function(err, user){
+			deferred.resolve(user)
+		})
+		return deferred.promise;
 	}
 
 
 	function updateUserById(id,updatedUser){
-		for(var i=0;i<users.length;i++)
-		{
-				if(users[i].id==id){
-						updatedUser.id = id;
-						users[i] = updatedUser;
-						break;
-				}
-		}
-		return updatedUser;
+
+		//console.log(updatedUser);
+		var deferred = q.defer();
+
+		UserModel.update({_id:id},{$set:{
+			Name: updatedUser.Name,
+			account: updatedUser.account,
+			role: updatedUser.role
+		}}, function(err,user){
+			UserModel.find(function(err,users){
+				deferred.resolve(users);
+			})
+		})
+
+		return deferred.promise;
 	}
 
 	function deleteUserById(id){
-		for(var i=0;i<users.length;i++)
-		{
-				if(users[i].id==id){
-						users.splice(i,1);
-						break;
-				}
-		}
-		return users;
+		console.log(id);
+		var deferred= q.defer();
+		UserModel.findById(id).remove(function(err,removed){
+			UserModel.find(function(err,users){
+				deferred.resolve(users);
+			})
+		})
+		return deferred.promise;
 	}
+
+	function followThisPerson(myId,idolId){
+
+		console.log(myId);
+		var deferred = q.defer();
+
+		UserModel.findOneAndUpdate({_id:myId},
+				{$addToSet:{following: idolId}},
+				{new:true},
+				function(err,user){
+					deferred.resolve(user);
+				}
+
+					/*UserModel.find(function(err,users){
+					deferred.resolve(users);
+					}*/
+
+		)
+
+		return deferred.promise;
+	}
+
+	function unfollowThisPerson(myid,idolId){
+
+		var deferred = q.defer();
+
+		UserModel.findOneAndUpdate({_id:myid},
+				{$pull:{following: idolId}},
+				{new:true},
+				function(err,user){
+					deferred.resolve(user);
+					/*UserModel.find(function(err,users){
+						deferred.resolve(users);
+					})*/
+				})
+
+		return deferred.promise;
+	}
+
+
 
 }

@@ -1,84 +1,4 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Upload Posts</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="../index.html">Main page</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="../Individual/Individual.view.html">My posts</a>
-                    </li>
-                    <li>
-                        <a href="../Upload/Upload.view.html">New post</a>
-                    </li>
-                    <li>
-                        <a href="../Upload/Upload.view.html">Edit this post</a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-
-                            <li class="divider"></li>
-                            <li><a class="pull-middle">Yo-Yo Ma</a></li>
-                            <li class="divider"></li>
-                            <li><a href="../index.html">Log Out</a></li>
-                            <li><a href="../Registration/Registration.view.html">Register</a></li>
-                            <li><a href="../Contact/Contact.view.html">Contact Adminstrator</a></li>
-                        </ul>
-                    </li>
-
-
-
-                </ul>
-
-                <div class="col-sm-3 col-md-3 pull-right">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
+<div id="wrapper" ng-controller="adminController">
 
     <!-- Page Content -->
     <div class="container">
@@ -92,53 +12,44 @@
         </div>
         <!-- /.row -->
 
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#registered" data-toggle="tab">Registered Students <i class="fa"></i></a></li>
-            <li><a href="#unregistered" data-toggle="tab">Unregistered Students <i class="fa"></i></a></li>
-        </ul>
 
 
-        <div class="tab-content">
-
-            <!--The Registered Students Tab -->
-            <div class="tab-pane active" id="registered">
+        <!--The Registered Students Tab -->
+        <div  id="registered">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <!-- The Table of the registered students-->
-                            <table id="mytable" class="table table-bordred table-striped">
+                            <table  class="table table-bordred table-striped">
+
 
                                 <thead>
-                                <th>Name</th>
-                                <th>Google+ Account</th>
-                                <th>Activation code</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th class="col-xs-2">Name</th>
+                                <th class="col-xs-2">Google+ Account</th>
+                                <th class="col-xs-2">Role</th>
+                                <th class="col-xs-2">Edit</th>
+                                <th class="col-xs-2">Delete</th>
                                 </thead>
                                 <tbody>
-
                                     <tr>
-                                        <td>Yo-yo Ma</td>
-                                        <td>yoyoma@gmail.com</td>
-                                        <td>12345</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                                        <td><input class="form-control" ng-model="user.Name"></td>
+                                        <td><input class="form-control" ng-model="user.account"></td>
+                                        <td><input class="form-control" ng-model="user.role"></td>
+                                        <td> <button class="btn btn-success" ng-click="updateUserById(user._id,user)">Update</button></td>
+                                        <td></td>
                                     </tr>
+                                    <tr ng-repeat="user in users">
+                                        <td>{{user.Name}}</td>
+                                        <td>{{user.account}}</td>
+                                        <td>{{user.role}}</td>
+                                        <!--
+                                        <td><button class="btn btn-primary" ng-click="findUserById(user._id)"></button></td>
+                                        <td><button class="btn btn-danger" ng-click="deleteUserById(user._id)"></button></td>
+                                        -->
 
-                                    <tr>
-                                        <td>Martha Argerich</td>
-                                        <td>martha@gmail.com</td>
-                                        <td>54321</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                    </tr>
+                                        <td><button class="btn btn-primary btn-xs" data-title="Edit" ng-click="findUserById(user._id)"><span class="glyphicon glyphicon-pencil" ></span></button></td>
+                                        <td><button class="btn btn-danger btn-xs" data-title="Delete" ng-click="deleteUserById(user._id)"><span class="glyphicon glyphicon-trash" ></span></button></p></td>
 
-                                    <tr>
-                                        <td>Annie Sophie-Mutter</td>
-                                        <td>annsophie@gmail.com</td>
-                                        <td>56789</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
                                     </tr>
 
                                 </tbody>
@@ -150,163 +61,22 @@
 
                             <div class="clearfix"></div>
 
-                            <ul class="pagination pull-right">
-                                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                            </ul>
+
 
                         </div>
 
                     </div>
                 </div>
             </div>
-            <!-- End of the Registered Students Tab-->
+        <!-- End of the Registered Students Tab-->
 
 
-            <!-- The Unregistered Students Tab-->
-            <div class="tab-pane" id="unregistered">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <!-- The Table of the registered students-->
-                            <table id="mytable" class="table table-bordred table-striped">
-
-                                <thead>
-                                <th>Name</th>
-                                <th>Activation code</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                                </thead>
-                                <tbody>
-
-                                    <tr>
-                                        <td>Tom</td>
-                                        <td>11111</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Alice</td>
-                                        <td>22222</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Mary</td>
-                                        <td>33333</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
-                                    </tr>
-
-                                </tbody>
-
-                            </table>
-                            <!-- The end of the table -->
-
-
-
-                            <div class="clearfix"></div>
-
-                            <ul class="pagination pull-right">
-                                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                            </ul>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- End of the Unregistered Students Tab-->
-
-            <!-- The Edit Pop-up Window-->
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                            <h4 class="modal-title custom_align" id="Heading">Edit Account's Detail</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input class="form-control " type="text" placeholder="Name">
-                            </div>
-                            <div class="form-group">
-
-                                <input class="form-control " type="text" placeholder="Activation ID">
-                            </div>
-                            <div class="form-group">
-                                <textarea rows="1" class="form-control" placeholder="Google+ Account"></textarea>
-
-
-                            </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- End of the Edit Pop-up Window-->
-
-            <!--The deletion Pop-up Window-->
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                            <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- End of the Deletion Pop-up Window-->
-
-
-
-        </div>
-
-
-        <hr>
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy Imaginary Conservatory 2015</p>
-                </div>
-            </div>
-            <!-- /.row -->
-        </footer>
+        <div ng-include src="'./view/Footer/Footer.view.html' "></div>
     </div>
+
+
+
     <!-- /.container -->
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</body>
-</html>
+
+
+</div>

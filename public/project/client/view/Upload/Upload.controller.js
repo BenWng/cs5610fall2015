@@ -7,22 +7,15 @@
 
 function uploadController($scope,$rootScope,$location,$routeParams,PostService,UserService){
 
-	var postId=$routeParams.id;
+	$scope.currentUserId=$rootScope.currentUser._id;
+	$scope.currentUserName=$rootScope.currentUser.Name;
 
-	console.log(postId);
-
-	if (postId) {
-		PostService.findPostById(postId)
-				.then(function (res) {
-					$scope.post = res.data;
-					console.log($scope.post);
-				});
-	};
-
-
-
-	$scope.submitPost=function(){
-		return UserService.createPost($scope.post)
+	$scope.uploadNewPost=function(){
+		$scope.post.userId=$scope.currentUserId;
+		//$scope.post.author=$scope.currentUserName;
+		$scope.tagsArray=$scope.post.tags.split(',');
+		$scope.post.tags=$scope.tagsArray;
+		PostService.createPost($scope.post)
 		.then(function(){
 			$location.path("/home");
 		})

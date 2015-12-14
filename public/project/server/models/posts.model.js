@@ -1,8 +1,10 @@
-var posts = require ("./posts.mockup.json");
+var q=require("q");
 
-"use strict";
 
-module.exports = function (app) {
+module.exports = function (app, mongoose, db) {
+
+		var PostSchema = require ("../schema/post.schema.js")(app,mongoose,db);
+		var PostModel = mongoose.model("PostModel", PostSchema);
 
 		var api = {
 			createPost: createPost,
@@ -17,64 +19,95 @@ module.exports = function (app) {
 		return api;
 
 		function createPost(post){
-			posts.push(post);
-			return post;
+			var deferred = q.defer();
+			//console.log(post);
+			PostModel.create(post,function(err,doc){
+				PostModel.find(function(err,posts){
+					deferred.resolve(posts);
+				})
+			})
+			return deferred.promise;
 		}
 
 		function updatePostById(id,updatedPost){
-			for(var i=0; i<posts.length; i++){
-				if(posts[i].id===id){
-					updatedPost.id=id;
-					updatedPost.userId=posts[i].userId;
-					posts[i]=updatedPost;
-					break;
-				}
+			var deferred = q.defer();
 
-			}
-			return updatedPost;
+			PostModel.update({_id:id},{$set:{
+				title: updatedPost.title,
+				youtube: updatedPost.youtube,
+				time: updatedPost.time,
+				tags: updatedPost.tags,
+				shortDescription: updatedPost.shortDescription,
+				details: updatedPost.details
+			}}, function(err,post){
+				PostModel.find(function(err,posts){
+					deferred.resolve(posts);
+				})
+			})
+			return deferred.promise;
 		}
 
 		function deletePostById(id){
-			for (var i=0;i<posts.length;i++){
-				if(posts[i].id==id){
-					posts.splice(i,1);
-					break;
-				}
-			}
-			return posts;
+			var deferred= q.defer();
+			PostModel.findById(id).remove(function(err,removed){
+				PostModel.find(function(err,posts){
+					deferred.resolve(posts);
+				})
+			})
+			return deferred.promise;
 		}
+
+		//function findPostsAll(searchText){
+		// 	if (searchText === 'undefined' || searchText ===null ){
+		//		return posts;
+		//	}
+		// 	else {
+		//		//console.log("test,test");
+		//		return posts.filter(function(post){
+		//			return post.title.indexOf(searchText)>-1 || post.author.indexOf(searchText)>-1 || post.tags.join().indexOf(searchText)>-1 || post.shortDescription.indexOf(searchText)>-1 || post.details.indexOf(searchText)>-1 ;
+		//			});
+        //
+		//			console.log(results);
+		//	}
+		//}
 
 		function findPostsAll(searchText){
-		 	if (searchText === 'undefined' || searchText ===null ){
-				return posts;
+			var deferred= q.defer();
+			if (searchText === 'undefined' || searchText ===null ){
+				PostModel.find(function(err,posts){
+					deferred.resolve(posts);
+				})
 			}
-		 	else {
-				//console.log("test,test");
-				return posts.filter(function(post){
-					return post.title.indexOf(searchText)>-1 || post.author.indexOf(searchText)>-1 || post.tags.join().indexOf(searchText)>-1 || post.shortDescription.indexOf(searchText)>-1 || post.details.indexOf(searchText)>-1 ;
-					});
-
-					console.log(results);
+			else{
+				console.log("2searchText="+searchText);
+				PostModel.find(
+						{$or:
+						[	{"title": { "$regex": searchText, "$options": "i" }},
+							{tags:{ "$regex":searchText, "$options": "i" }},
+							{"shortDescription":{ "$regex": searchText, "$options": "i" }},
+							{"details":{ "$regex": searchText, "$options": "i" }}
+						]},function(err,posts){
+							console.log(posts);
+							deferred.resolve(posts);
+						}
+				)
 			}
+			return deferred.promise;
 		}
+
 
 
 
 
 		function findPostById(id){
-
-			var postById={};
-			for (var i=0;i<posts.length;i++){
-				if(posts[i].id==id){
-					postById=posts[i];
-					break;
-				}
-			}
-			console.log(postById);
-			return postById;
+			var deferred = q.defer();
+			PostModel.findById(id, function(err,post){
+				deferred.resolve(post);
+			})
+			return deferred.promise;
 		}
 
-		//To-do: here if the given tag and the existing tag are in different cases(lower and capital),
+/*		//TODO: here if the given tag and the existing tag are in different cases(lower and capital),
 		//the result would be false, I need to change this
 		function findPostsByTag(tag){
 			var postsByTag=[];
@@ -87,16 +120,26 @@ module.exports = function (app) {
 				}
 			}
 			return postsByTag;
+		}*/
+
+		function findPostsByTag(tag){
+			var deferred= q.defer();
+			PostModel.find({tags:tag},function(err,posts){
+				console.log(tag);
+				deferred.resolve(posts);
+			})
+			return deferred.promise;
 		}
 
+
+
+
 		function findPostsByUserId(userId){
-			var postsByUser = [];
-			for(var i=0;i<posts.length;i++){
-					if(posts[i].userId==userId){
-						postsByUser.push(posts[i]);
-					}
-			}
-			return postsByUser;
+			var deferred = q.defer();
+			PostModel.find({userId: userId}, function(err, posts){
+				deferred.resolve(posts);
+			})
+			return deferred.promise;
 		}
 
 }

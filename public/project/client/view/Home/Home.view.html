@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Performance Posts
-                    <small>Newest to oldest</small>
+                    <!--<small>Newest to oldest</small>-->
                 </h1>
             </div>
         </div>
@@ -27,7 +27,7 @@
                     <h3>{{post.title}}</h3>
                     <h4>{{post.author}}</h4>
                     <p>{{post.shortDescription}}</p>
-                    <a class="btn btn-primary" href="#/individual/{{post.id}}">View Post <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <a class="btn btn-primary" href="/individual/{{post._id}}">View Post <span class="glyphicon glyphicon-chevron-right"></span></a>
                 </div>
             </div>
             <!-- /.row -->
@@ -38,44 +38,22 @@
 
 
 
-
-
-
-
-        <!-- Pagination -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
+        <div ng-include src="'./view/Footer/Footer.view.html' "></div>
 
     </div>
     <!-- /.container -->
 
 </div>
+
+
+<script>
+    $(function(){
+        $(window).resize(function(){
+            var h = $(window).height();
+            var w = $(window).width();
+            var iframe=$("iframe");
+            iframe.css('height',(h < 300 || w < 550) ? 150 : 300);
+            iframe.css('width',(h < 300 || w < 550) ? 350 : 550);
+        });
+    });
+</script>

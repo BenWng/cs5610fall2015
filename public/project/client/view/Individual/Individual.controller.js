@@ -12,31 +12,71 @@
 }*/
 
 
-function individualController($scope,$rootScope, $routeParams,PostService){
+function individualController($scope,$rootScope, $routeParams,PostService,UserService){
 
 	//$scope.post=$rootScope.posts.filter(function(x){
 	//		return x.id===$routeParams.id;
 	//	})[0];
 	//}
 
+
+
+
 	PostService.findPostById($routeParams.id)
 				.then(function(res){
-			$scope.post=res.data;
-			//$rootScope.posts=$scope.posts;
-					console.log($scope.post);
-					$scope.allowEdit=$rootScope.currentUser.id==$scope.post.userId;
-					});
+					$scope.post=res.data;
+
+					UserService.findUserById($scope.post.userId)
+							.then(function(res){
+								$scope.author=res.data.Name;
+							})
+
+
+					if ($rootScope.currentUser==null) {
+						$scope.allowEdit= false;
+					}
+					else{
+						// The boolean predicative decides if the Editor buttons shows or not
+						$scope.allowEdit = $rootScope.currentUser._id == $scope.post.userId || $rootScope.currentUser.role=="Admin";
+
+						// The boolean predicative decides if the follow or unfollow buttons show
+						$scope.buttonShow= $rootScope.currentUser._id != $scope.post.userId;
+
+
+						// The boolean predicative decides if the currentUser has already followed the creator of this post
+						$scope.followAlready=$rootScope.currentUser.following.indexOf($scope.post.userId) != -1;
 
 
 
+						$scope.followShow = $scope.buttonShow && (! $scope.followAlready);
+
+						$scope.unfollowShow = $scope.buttonShow && $scope.followAlready;
+					}
+						$scope.tags=$scope.post.tags;
+				});
+
+	$scope.followThisPerson=function(){
 
 
 
+		UserService.followThisPerson($rootScope.currentUser._id,{"idolId": $scope.post.userId})
+				.then(function(doc){
+					$scope.currentUser=doc.data;
+					$rootScope.currentUser=$scope.currentUser;
+					//console.log($rootScope.currentUser);
+				});
+		$scope.followShow=false;
+		$scope.unfollowShow=true;
+	};
 
-
-
-	//$scope.youtubeUrl="http://www.youtube.com/embed/"+$scope.post.youtube+"?autoplay=0";
-
-
-	//console.log($scope.post);
+	$scope.unfollowThisPerson=function(){
+		UserService.unfollowThisPerson($rootScope.currentUser._id,{"idolId":$scope.post.userId})
+				.then(function(doc){
+					$scope.currentUser=doc.data;
+					$rootScope.currentUser=$scope.currentUser;
+					//console.log($rootScope.currentUser);
+				})
+		$scope.followShow=true;
+		$scope.unfollowShow=false;
+	};
 }

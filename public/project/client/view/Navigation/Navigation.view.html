@@ -9,18 +9,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/home">Main page</a>
+            <a class="navbar-brand" href="/home">Main page</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#/home?user={{currentUser.id}}">My posts</a>
+                    <a ng-show="currentUser" href="/home?user={{currentUser._id}}">My posts</a>
                 </li>
 
                 <li>
-                    <a href="#/add">New post</a>
+                    <a ng-show="currentUser" href="/upload">New post</a>
                 </li>
+
+                <li>
+                    <a ng-show="currentUser" href="/profile">Profile</a>
+                </li>
+
+                <li>
+                   <a ng-show="admin_navigation_show" href="/admin">Administrator Page</a>
+                </li>
+
 
 
                 <li class="dropdown">
@@ -32,15 +41,15 @@
                           <li class="divider" ng-show="currentUser"></li>
 
 
+                        <li><a ng-show="currentUser" ng-click='logout()' href="">Log Out</a></li>
 
 
-                        <li><a ng-click='logout()'>Log Out</a></li>
-
-
-                        <li><a href="#/registration">Register</a></li>
-                        <li><a href="#/contact">Contact Adminstrator</a></li>
+                        <li><a href="/oauth/google" target="_self" ng-hide="currentUser" >Log In/Register </a></li>
+                        <li><a href=" mailto:wnghan@gmail.com">Contact Adminstrator</a></li>
                     </ul>
                 </li>
+
+
 
 
 

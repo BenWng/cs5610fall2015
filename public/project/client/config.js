@@ -35,7 +35,7 @@
             templateUrl: './view/Administrator/Administrator.view.html'
             /*  resolve: {
                   admin_show: admin_show
-              } /
+              } */
         })
           .otherwise({
               redirectTo:'/home'

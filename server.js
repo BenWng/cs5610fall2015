@@ -80,7 +80,7 @@ app.get('/oauth/google',
 app.get('/oauth/google/callback',
     passport.authenticate('google'),
     function(req, res) {
-        res.redirect('/home');
+        res.redirect('#/home');
     });
 
 app.get('/logout', function(req, res){

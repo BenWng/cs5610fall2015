@@ -101,19 +101,25 @@ app.use(express.static(__dirname + '/public/project/client'));
 
 app.use(function(req, res, next) {
     console.log(req.originalUrl);
-    if(pathcontains(req.originalUrl, '/home','/add','/editor','/upload','/contact','/individual','/admin','/profile'))
+    if(pathcontains(req.originalUrl, ['/favicon.ico', '/home','/add','/editor','/upload','/contact','/individual','/admin','/profile']))
         res.sendfile(__dirname + '/public/project/client/index.html');
     else
         res.send(200);
 });
 
-function pathcontains(path){
+function pathcontains(path, validPlaces){
     console.log("******************************************");
     console.log(path);
     console.log(arguments);
-    return Array.prototype.slice.call(arguments,1).find(function(x){
-        return path.indexOf(x)>-1;
-    })
+    for(var i=0; i<validPlaces.length; i++) {
+        if(path == validPlaces[i]) {
+            return true;
+        }
+    }
+    return false;
+    //return Array.prototype.slice.call(arguments,1).find(function(x){
+    //    return path.indexOf(x)>-1;
+    //})
 }
 //////////////////////////////////////////////
 

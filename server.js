@@ -112,7 +112,7 @@ function pathcontains(path, validPlaces){
     console.log(path);
     console.log(arguments);
     for(var i=0; i<validPlaces.length; i++) {
-        if(path == validPlaces[i]) {
+        if(path.indexOf(validPlaces[i]) > -1) {
             return true;
         }
     }

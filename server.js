@@ -108,6 +108,9 @@ app.use(function(req, res, next) {
 });
 
 function pathcontains(path){
+    console.log("******************************************");
+    console.log(path);
+    console.log(arguments);
     return Array.prototype.slice.call(arguments,1).find(function(x){
         return path.indexOf(x)>-1;
     })

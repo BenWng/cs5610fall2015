@@ -28,7 +28,12 @@ function individualController($scope,$rootScope, $routeParams,PostService,UserSe
 
 					UserService.findUserById($scope.post.userId)
 							.then(function(res){
-								$scope.author=res.data.Name;
+								if (res.data == null){
+									$scope.author="N/A (this author is deleted)";
+								}
+								else {
+									$scope.author = res.data.Name;
+								}
 							})
 
 

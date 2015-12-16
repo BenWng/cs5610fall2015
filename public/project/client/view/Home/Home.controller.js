@@ -29,9 +29,12 @@ function homeController($scope,$rootScope,$location,PostService,UserService){
 				var post_author=(function (x){
 					UserService.findUserById(x.userId)
 						.then(function (res) {
-							//console.log(res.data);
-							 x["author"]=res.data.Name;
-
+							if (res.data==null){
+								x["author"]="N/A";
+							}
+							else {
+								x["author"] = res.data.Name;
+							}
 						})
 					return x;
 				})(post);

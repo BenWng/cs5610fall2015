@@ -30,9 +30,11 @@ function individualController($scope,$rootScope, $routeParams,PostService,UserSe
 							.then(function(res){
 								if (res.data == null){
 									$scope.author="N/A (this author is deleted)";
+									$scope.existing=false;
 								}
 								else {
 									$scope.author = res.data.Name;
+									$scope.existing=true;
 								}
 							})
 

@@ -13,8 +13,8 @@
                     <h4><a href="/home?user={{post.userId}}">by {{author}}</a>
                     <!--Follow Button-->
                     <small>
-                        <button class="btn btn-primary" ng-click="followThisPerson()" ng-show="followShow">Follow</button>
-                        <button class="btn btn-danger" ng-click="unfollowThisPerson()" ng-show="unfollowShow">UnFollow</button>
+                        <button class="btn btn-primary" ng-click="followThisPerson()" ng-show="followShow && existing">Follow</button>
+                        <button class="btn btn-danger" ng-click="unfollowThisPerson()" ng-show="unfollowShow && existing">UnFollow</button>
                     </small>
                     </h4>
                 <!--</div>-->

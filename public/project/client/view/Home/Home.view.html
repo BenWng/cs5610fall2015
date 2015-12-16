@@ -48,6 +48,12 @@
 
 <script>
     $(function(){
+        var h = $(window).height();
+        var w = $(window).width();
+        var iframe=$("iframe");
+        iframe.css('height',(h < 300 || w < 550) ? 150 : 300);
+        iframe.css('width',(h < 300 || w < 550) ? 350 : 550);
+
         $(window).resize(function(){
             var h = $(window).height();
             var w = $(window).width();

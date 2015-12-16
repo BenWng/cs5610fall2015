@@ -26,10 +26,16 @@ function editorController($scope,$rootScope,$location,$routeParams,PostService,U
 		if(Array.isArray($scope.post.tags)) {
 			if ($scope.post.tags.length === 1) {
 				$scope.post.tags = $scope.post.tags[0].split(',');
+				for (var i=0; i<$scope.post.tags.length; i++){
+					$scope.post.tags[i]	= $scope.post.tags[i].replace(/(^\s+|\s+$)/g, '');
+				}
 			}
 		}
 		else{
 			$scope.post.tags = $scope.post.tags.split(',');
+			for (var i=0; i<$scope.post.tags.length; i++){
+				$scope.post.tags[i]	= $scope.post.tags[i].replace(/(^\s+|\s+$)/g, '');
+			}
 		}
 
 		PostService.updatePostById(postId,$scope.post)

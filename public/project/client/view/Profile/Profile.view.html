@@ -80,15 +80,13 @@
 
                             <thead>
                             <th class="col-xs-2">Name</th>
-                            <th class="col-xs-2">Google+ Account</th>
+                            <th class="col-xs-2">Contact</th>
                             <th class="col-xs-2">Delete</th>
                             </thead>
                             <tbody>
                             <tr ng-repeat="person in myPeople">
                                 <td><a href="/home?user={{person._id}}">{{person.Name}}</a></td>
-                                <td>{{person.account}}</td>
-
-
+                                <td><a href="mailto:{{person.account}}"><button class="btn btn-primary btn-xs" data-title="Email"><span class="glyphicon glyphicon-envelope" ></span></button></p></a></td>
                                 <td><button class="btn btn-danger btn-xs" data-title="Delete" ng-click="deleteIdol(person)"><span class="glyphicon glyphicon-trash" ></span></button></p></td>
 
                             </tr>

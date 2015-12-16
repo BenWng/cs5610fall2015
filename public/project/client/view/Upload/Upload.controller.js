@@ -15,6 +15,9 @@ function uploadController($scope,$rootScope,$location,$routeParams,PostService,U
 		//$scope.post.author=$scope.currentUserName;
 		$scope.tagsArray=$scope.post.tags.split(',');
 		$scope.post.tags=$scope.tagsArray;
+		for (var i=0; i<$scope.post.tags.length; i++){
+			$scope.post.tags[i]	= $scope.post.tags[i].replace(/(^\s+|\s+$)/g, '');
+		}
 		PostService.createPost($scope.post)
 		.then(function(){
 			$location.path("/home");

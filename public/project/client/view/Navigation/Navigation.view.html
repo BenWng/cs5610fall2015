@@ -22,9 +22,6 @@
                     <a ng-show="currentUser" href="/upload">New post</a>
                 </li>
 
-                <li>
-                   <a ng-show="admin_navigation_show" href="/admin">Administrator Page</a>
-                </li>
 
                 <li>
                     <a href="https://docs.google.com/a/husky.neu.edu/document/d/107OrKHWoYVQh77pGIlo3wFQMAJx4Wz-v9JHSCevRLdc/edit?usp=sharing">Documentation</a>
@@ -43,6 +40,13 @@
                         <li>
                             <a ng-show="currentUser" href="/profile">Profile</a>
                         </li>
+
+
+                        <li>
+                            <a ng-show="admin_navigation_show" href="/admin">Administrator Page</a>
+                        </li>
+
+
 
                         <li><a ng-show="currentUser" ng-click='logout()' href="">Log Out</a></li>
 

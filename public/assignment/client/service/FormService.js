@@ -25,6 +25,8 @@
 		
 		function FindAllFormsForUser(userId){
 			var deferred = $q.defer();
+			console.log("FindAllFormsForUser is fired");
+			console.log(userId);
 			$http.get("/api/assignment/user/"+ userId + "/form")
 				.success(function(res){
 					deferred.resolve(res);

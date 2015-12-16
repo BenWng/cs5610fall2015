@@ -11,7 +11,7 @@ function FormController($scope, $rootScope, $location, FormService){
 	if(user == null)
 		alert("please login first");
 	else{
-		RenderForm(user._id);
+		RenderForm(user.id);
 		$scope.addForm = AddForm;
 		$scope.deleteForm = DeleteForm;
 		$scope.selectForm = SelectForm;
@@ -22,13 +22,15 @@ function FormController($scope, $rootScope, $location, FormService){
 		FormService.findAllFormsForUser(userId)
 			.then(function(forms){
 				$scope.forms = forms;
+				console.log(userId);
+				console.log($scope.forms);
 			})
 	}
 	
 	function AddForm(){
 		var form = $scope.form_first;
-		form.userId = user._id;
-		FormService.createFormForUser(user._id, form)
+		form.userId = user.id;
+		FormService.createFormForUser(user.id, form)
 			.then(function(forms){
 				$scope.forms = forms;
 			});

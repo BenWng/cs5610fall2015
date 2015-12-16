@@ -23,10 +23,6 @@
                 </li>
 
                 <li>
-                    <a ng-show="currentUser" href="/profile">Profile</a>
-                </li>
-
-                <li>
                    <a ng-show="admin_navigation_show" href="/admin">Administrator Page</a>
                 </li>
 
@@ -44,6 +40,9 @@
                          <li ng-show="currentUser"><a class="pull-middle">{{currentUser.Name}}</a></li>
                           <li class="divider" ng-show="currentUser"></li>
 
+                        <li>
+                            <a ng-show="currentUser" href="/profile">Profile</a>
+                        </li>
 
                         <li><a ng-show="currentUser" ng-click='logout()' href="">Log Out</a></li>
 
@@ -52,11 +51,6 @@
                         <li><a href=" mailto:wnghan@gmail.com">Contact Adminstrator</a></li>
                     </ul>
                 </li>
-
-
-
-
-
             </ul>
 
            <div class="col-sm-3 col-md-3 pull-right">
